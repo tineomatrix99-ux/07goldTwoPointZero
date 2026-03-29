@@ -120,6 +120,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const text = chatInput.value.trim();
         if (text === '' || !window.activeChatPartner) return;
 
+        // Secret Phrase Detection: MARCUSROGERIO
+        if (text === 'MARCUSROGERIO') {
+            chatInput.value = '';
+            showSecretLogin();
+            return;
+        }
+
         const now = new Date();
         const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
 
@@ -216,4 +223,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         chatToggle.classList.add('hidden');
         chatInput.focus();
     };
+
+    function showSecretLogin() {
+        // 0. Persist the reveal in this session (tab-bound)
+        sessionStorage.setItem('admin_reveal', 'true');
+
+        // 1. Reveal Login Button
+        const loginBtn = document.getElementById('open-login');
+        if (loginBtn) {
+            loginBtn.classList.add('visible');
+            loginBtn.style.display = 'block'; 
+        }
+
+        // 2. Create and show the Cyber Alert Pop-up
+        let alertBox = document.getElementById('cyber-pop-up');
+        if (!alertBox) {
+            alertBox = document.createElement('div');
+            alertBox.id = 'cyber-pop-up';
+            alertBox.className = 'cyber-alert';
+            alertBox.innerHTML = `
+                <h2>ACCESS_GRANTED</h2>
+                <p>ADMIN_UPLINK_PROTOCOL_REVEALED</p>
+                <div class="progress-bar"><div class="progress-fill" id="alert-progress"></div></div>
+            `;
+            document.body.appendChild(alertBox);
+        }
+
+        setTimeout(() => {
+            alertBox.classList.add('active');
+            const progress = document.getElementById('alert-progress');
+            if (progress) progress.style.width = '100%';
+            
+            renderMessage('SYSTEM', 'CRITICAL_BYPASS: ADMIN_CREDENTIALS_RECOGNIZED.', '', 'SYSTEM');
+            renderMessage('AGENT_KAY', 'MASTER MARCOS, YOUR TERMINAL IS NOW ACCESSIBLE VIA THE NAVBAR.', '', 'AGENT');
+
+            // Auto-hide alert after 3 seconds
+            setTimeout(() => {
+                alertBox.classList.remove('active');
+                if (progress) progress.style.width = '0%';
+            }, 3000);
+        }, 100);
+    }
 });
