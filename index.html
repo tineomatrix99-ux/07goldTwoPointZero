@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07gold // NEURAL EXCHANGE PROTOCOL</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 85 L10 45 L25 55 L40 25 L55 55 L75 25 L85 55 L95 45 L90 85 Z' fill='%23fbee06' /%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Supabase Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- HUD Decorative Corners -->
+    <div class="hud-corner top-left"></div>
+    <div class="hud-corner top-right"></div>
+    <div class="hud-corner bottom-left"></div>
+    <div class="hud-corner bottom-right"></div>
+
+    <div class="video-background">
+        <video autoplay muted loop id="bg-video" playsinline>
+            <source src="os-download-background.webm" type="video/webm">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="brand-link" style="text-decoration: none; color: inherit;">
+            <div class="brand-container">
+                <div class="logo-text">07<span>GOLD</span></div>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="#buy">BUY_GP</a></li>
+            <li><a href="#sell">SELL_GP</a></li>
+            <li><a href="reviews.html">VOUCHES</a></li>
+            <li><a href="#support">UPLINK</a></li>
+        </ul>
+        <button class="login-btn" id="open-login">LOG_IN</button>
+    </nav>
+
+    <main class="container">
+        <header class="hero">
+            <h1>NEURAL <br><span class="highlight">EXCHANGE.</span></h1>
+            <p>QUANTUM-SECURE OSRS LIQUIDITY. REAL-TIME MARKET PROTOCOLS. ZERO TRACE DETECTION.</p>
+        </header>
+
+        <section class="bento-grid">
+            <!-- Calculator Card -->
+            <div class="bento-card card-large calculator-card">
+                <div class="card-header">
+                    <h2>TRADE_TERMINAL</h2>
+                    <div class="toggle">
+                        <button id="buy-btn" class="active">ACQUIRE</button>
+                        <button id="sell-btn">LIQUIDATE</button>
+                    </div>
+                </div>
+                <div class="calculator-content">
+                    <div class="input-group">
+                        <p style="color: var(--cyber-yellow); font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; letter-spacing: 1px;">// NEGOTIATION_AVAILABLE via LIVE_CHAT</p>
+                        <label>UNIT_VOLUME (M)</label>
+                        <input type="number" id="gold-amount" value="10" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label>TOTAL_SETTLEMENT (USD)</label>
+                        <div class="price-display">$<span id="total-price">3.50</span></div>
+                    </div>
+                    <div class="input-group">
+                        <label>SETTLEMENT_GATEWAY</label>
+                        <div class="payment-selection-grid" id="payment-grid">
+                            <div class="payment-item active" data-method="PAYPAL" title="PayPal">
+                                <img src="paypallogo.png" alt="PayPal">
+                            </div>
+                            <div class="payment-item" data-method="BITCOIN" title="Bitcoin">
+                                <img src="btc.png" alt="BTC">
+                            </div>
+                            <div class="payment-item" data-method="USDT" title="USDT">
+                                <img src="usdt.jpg" alt="USDT">
+                            </div>
+                            <div class="payment-item" data-method="LITECOIN" title="Litecoin">
+                                <img src="ltc.png" alt="LTC">
+                            </div>
+                            <div class="payment-item" data-method="WISE" title="Wise">
+                                <img src="wiselogo.png" alt="Wise">
+                            </div>
+                            <div class="payment-item" data-method="SKRILL" title="Skrill">
+                                <img src="skrilllogo.png" alt="Skrill">
+                            </div>
+                            <div class="payment-item" data-method="REVOLUT" title="Revolut">
+                                <img src="Revolutlogo.png" alt="Revolut">
+                            </div>
+                        </div>
+                        <input type="hidden" id="selected-payment" value="PAYPAL">
+                    </div>
+                </div>
+                <button class="primary-cta">INITIATE_TRANSFER</button>
+            </div>
+
+            <!-- Price Card -->
+            <div class="bento-card card-small price-card">
+                <h3>MARKET_INDEX</h3>
+                <div class="rate-display">
+                    <span class="rate">$0.35</span>
+                </div>
+                <div class="trend up" style="color: #00ff00; font-weight: 700;">+2.4% // 24H_DELTA</div>
+            </div>
+
+            <!-- Trust Card -->
+            <div class="bento-card card-small trust-card">
+                <h3>NETWORK_TRUST</h3>
+                <div class="trust-score" style="font-size: 3rem; font-weight: 900; color: var(--cyber-magenta);">4.9/5.0</div>
+                <p>10K+ ENCRYPTED TRADES VERIFIED.</p>
+            </div>
+
+            <!-- Security Card -->
+            <div class="bento-card card-medium security-card">
+                <h3>SHIELD_PROTOCOL</h3>
+                <p>PROPRIETARY ANTI-DETECTION METHODS ENFORCED. ZERO BANS RECORDED 2024-2026.</p>
+                <div class="shield-icon">🛡️</div>
+            </div>
+
+            <!-- Payment Methods Card -->
+            <div class="bento-card payments-card">
+                <h3>SETTLEMENT_GATEWAYS</h3>
+                <div class="payment-icons">
+                    <div class="pay-icon" title="PayPal">
+                        <img src="paypallogo.png" alt="PayPal" class="crypto-img">
+                    </div>
+                    <div class="pay-icon" title="Bitcoin">
+                        <img src="btc.png" alt="BTC" class="crypto-img">
+                    </div>
+                    <div class="pay-icon" title="USDT">
+                        <img src="usdt.jpg" alt="USDT" class="crypto-img">
+                    </div>
+                    <div class="pay-icon" title="Litecoin">
+                        <img src="ltc.png" alt="LTC" class="crypto-img">
+                    </div>
+                    <div class="pay-icon" title="Wise">
+                        <img src="wiselogo.png" alt="Wise" class="crypto-img">
+                    </div>
+                    <div class="pay-icon" title="Skrill">
+                        <img src="skrilllogo.png" alt="Skrill" class="crypto-img">
+                    </div>
+                    <div class="pay-icon" title="Revolut">
+                        <img src="Revolutlogo.png" alt="Revolut" class="crypto-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" style="padding: 4rem; text-align: center; border-top: 1px solid var(--glass-border);">
+        <div class="logo-text" style="font-size: 1.2rem;">07<span>GOLD</span></div>
+        <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 1rem;">© 2026 // NEURAL_EXCHANGE_PROTOCOL. ALL_RIGHTS_RESERVED.</p>
+    </footer>
+
+    <!-- High-End Auth Terminal Modal -->
+    <div class="modal-overlay" id="auth-terminal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:12000; justify-content:center; align-items:center; backdrop-filter:blur(20px);">
+        <div class="modal-content auth-modal-content" style="background:#020205; padding:0; border:1px solid var(--cyber-cyan); box-shadow:0 0 50px rgba(0, 243, 255, 0.2); max-width:500px; width:90%; overflow:hidden; position:relative;">
+            
+            <!-- Terminal Header -->
+            <div style="background:var(--cyber-cyan); color:#000; padding:10px 20px; font-family:'Orbitron'; font-weight:900; font-size:0.7rem; display:flex; justify-content:space-between; align-items:center;">
+                <span>AUTHENTICATION_TERMINAL_v2.0</span>
+                <button onclick="closeAuthTerminal()" style="background:none; border:none; color:#000; font-weight:900; cursor:pointer; font-size:1rem;">[X]</button>
+            </div>
+
+            <div style="padding:3rem;">
+                <!-- Step 1: Credentials -->
+                <div id="auth-step-login" style="display:block;">
+                    <h2 style="font-family:'Orbitron'; color:#fff; margin-bottom:2rem; font-size:1.5rem;">IDENTIFY_YOURSELF</h2>
+                    <div class="input-group" style="margin-bottom:1.5rem;">
+                        <label style="display:block; color:var(--cyber-cyan); font-size:0.7rem; margin-bottom:0.5rem; letter-spacing:2px;">UPLINK_ID (EMAIL)</label>
+                        <input type="text" id="auth-email" placeholder="neural@network.link" style="width:100%; background:#000; border:1px solid #333; color:var(--cyber-cyan); padding:1rem; font-family:'Orbitron';">
+                    </div>
+                    <div class="input-group" style="margin-bottom:2.5rem;">
+                        <label style="display:block; color:var(--cyber-cyan); font-size:0.7rem; margin-bottom:0.5rem; letter-spacing:2px;">PASS_KEY</label>
+                        <input type="password" id="auth-password" placeholder="********" style="width:100%; background:#000; border:1px solid #333; color:var(--cyber-cyan); padding:1rem; font-family:'Orbitron';">
+                    </div>
+                    <button id="auth-login-submit" class="primary-cta" style="width:100%;">START_HANDSHAKE</button>
+                </div>
+
+                <!-- Step 2: 2FA Challenge -->
+                <div id="auth-step-mfa" style="display:none; text-align:center;">
+                    <h2 style="font-family:'Orbitron'; color:var(--cyber-magenta); margin-bottom:1rem; font-size:1.5rem;">MFA_CHALLENGE</h2>
+                    <p style="color:#888; font-size:0.8rem; margin-bottom:2.5rem;">SECURE_TOKEN_REQUIRED_FOR_ACCESS</p>
+                    <div class="input-group" style="margin-bottom:2.5rem;">
+                        <input type="text" id="auth-mfa-code" placeholder="000000" maxlength="6" style="width:100%; background:#000; border:1px solid var(--cyber-magenta); color:var(--cyber-magenta); padding:1.5rem; text-align:center; font-family:'Orbitron'; font-size:2.5rem; letter-spacing:10px;">
+                    </div>
+                    <button id="auth-mfa-submit" class="primary-cta" style="width:100%; border-color:var(--cyber-magenta); color:var(--cyber-magenta);">AUTHORIZE_ACCESS</button>
+                </div>
+
+                <!-- Step 3: MFA Setup -->
+                <div id="auth-step-setup" style="display:none; text-align:center;">
+                    <h2 style="font-family:'Orbitron'; color:var(--cyber-yellow); margin-bottom:1rem; font-size:1.2rem;">NEW_UPLINK_PROTECTION</h2>
+                    <div id="terminal-qr-container" style="background:white; padding:10px; display:inline-block; margin-bottom:1.5rem; border:2px solid var(--cyber-yellow);"></div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="text" id="terminal-secret-text" readonly style="width:100%; background:#111; border:1px dashed #444; color:#fff; padding:0.5rem; font-family:monospace; font-size:0.7rem; text-align:center;">
+                    </div>
+                    <div class="input-group" style="margin-bottom:1.5rem;">
+                        <input type="text" id="terminal-setup-code" placeholder="TOKEN" style="width:100%; background:#000; border:1px solid var(--cyber-yellow); color:var(--cyber-yellow); padding:1rem; text-align:center; font-family:'Orbitron';">
+                    </div>
+                    <button id="auth-setup-submit" class="primary-cta" style="width:100%; border-color:var(--cyber-yellow); color:var(--cyber-yellow);">VERIFY_AND_LINK</button>
+                </div>
+            </div>
+
+            <!-- Terminal Footer Status -->
+            <div id="auth-status-bar" style="background:#050505; border-top:1px solid #222; padding:10px 20px; font-family:monospace; font-size:0.6rem; color:#444;">
+                STATUS: READY_FOR_UPLINK...
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Live Chat Widget -->
+    <div id="chat-widget-container" class="chat-widget">
+        <div id="chat-header" class="chat-header">
+            <div class="chat-status">
+                <span class="status-dot"></span>
+                <span>NEURAL_UPLINK_v1.0</span>
+            </div>
+            <button id="close-chat" class="chat-close-btn">[X]</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message system">
+                <span class="msg-time">12:00</span>
+                <span class="msg-sender">SYSTEM:</span> UPLINK_ESTABLISHED. SECURE_CHANNEL_OPEN.
+            </div>
+            <div class="message agent">
+                <span class="msg-time">12:01</span>
+                <span class="msg-sender">AGENT_KAY:</span> WELCOME TO 07GOLD. HOW CAN I ASSIST YOUR TRADE TODAY?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="TYPE_MESSAGE..." autocomplete="off">
+            <button id="send-chat" class="chat-send-btn">SEND</button>
+        </div>
+    </div>
+
+    <!-- Floating Chat Toggle Button -->
+    <button id="chat-toggle" class="chat-toggle-btn">
+        <div class="toggle-icon">💬</div>
+        <div class="toggle-text">UPLINK</div>
+    </button>
+
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>

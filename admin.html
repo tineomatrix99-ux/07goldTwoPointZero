@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07gold // ADMIN_TERMINAL</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 85 L10 45 L25 55 L40 25 L55 55 L75 25 L85 55 L95 45 L90 85 Z' fill='%23ff00c1' /%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .admin-panel {
+            max-width: 800px;
+            margin: 6rem auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--cyber-magenta);
+            padding: 3rem;
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);
+        }
+        .admin-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+        .rate-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .admin-input-group label {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--cyber-cyan);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .admin-input-group input {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--cyber-cyan);
+            color: #fff;
+            padding: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+        }
+        .update-btn {
+            width: 100%;
+            padding: 2rem;
+            background: var(--cyber-magenta);
+            color: #fff;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 5px;
+        }
+        .update-btn:hover {
+            box-shadow: 0 0 30px var(--cyber-magenta);
+            transform: scale(1.02);
+        }
+        #access-denied {
+            display: none;
+            text-align: center;
+            padding: 10rem 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop id="bg-video" playsinline>
+            <source src="os-download-background.webm" type="video/webm">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo-text">ADMIN_<span>STATION</span></div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="index.html" class="login-btn visible" style="text-decoration: none; display: flex; align-items: center; justify-content: center; height: auto;">RETURN_TO_SITE</a>
+            <button class="login-btn visible" onclick="handleLogout()">LOGOUT</button>
+        </div>
+    </nav>
+
+    <div id="access-denied">
+        <h1 style="color: var(--cyber-magenta); font-family: 'Orbitron'; font-size: 4rem;">ACCESS_DENIED</h1>
+        <p>IDENTIDADE NÃO VERIFICADA. REDIRECIONANDO...</p>
+    </div>
+
+    <main class="container" id="admin-main" style="display: none;">
+        <div class="admin-panel">
+            <div class="admin-header">
+                <h1 style="font-family: 'Orbitron'; color: #fff;">INDEX_MANAGEMENT</h1>
+                <p style="color: var(--cyber-cyan);">// AJUSTE DE TAXAS EM TEMPO REAL</p>
+            </div>
+
+            <div class="rate-grid">
+                <div class="admin-input-group">
+                    <label>BUY_RATE (USD/M)</label>
+                    <input type="number" id="new-buy-rate" step="0.001" value="0.350">
+                </div>
+                <div class="admin-input-group">
+                    <label>SELL_RATE (USD/M)</label>
+                    <input type="number" id="new-sell-rate" step="0.001" value="0.310">
+                </div>
+            </div>
+
+            <button class="update-btn" id="push-update" style="margin-bottom: 3rem;">PUSH_CHANGES_TO_MAIN</button>
+
+            <div class="admin-header" style="border-top: 1px solid var(--glass-border); padding-top: 3rem;">
+                <h1 style="font-family: 'Orbitron'; color: #fff;">UPLINK_MONITOR</h1>
+                <p style="color: var(--cyber-magenta);">// ACTIVE_COMMUNICATIONS_CHANNELS</p>
+            </div>
+
+            <div id="uplink-list" style="display: flex; flex-direction: column; gap: 10px;">
+                <p style="color: #444; font-family: monospace;">AWAITING_INCOMING_CONNECTIONS...</p>
+            </div>
+
+            <p id="status-msg" style="margin-top: 1.5rem; text-align: center; font-family: 'Orbitron'; font-size: 0.7rem;"></p>
+        </div>
+    </main>
+
+    <!-- Custom Live Chat Widget -->
+    <div id="chat-widget-container" class="chat-widget">
+        <div id="chat-header" class="chat-header">
+            <div class="chat-status">
+                <span class="status-dot"></span>
+                <span>NEURAL_UPLINK_v1.0</span>
+            </div>
+            <button id="close-chat" class="chat-close-btn">[X]</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message system">
+                <span class="msg-time">12:00</span>
+                <span class="msg-sender">SYSTEM:</span> UPLINK_ESTABLISHED. SECURE_CHANNEL_OPEN.
+            </div>
+            <div class="message agent">
+                <span class="msg-time">12:01</span>
+                <span class="msg-sender">AGENT_KAY:</span> WELCOME TO THE ADMIN TERMINAL. MONITORING ALL ACTIVE UPLINKS.
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="TYPE_MESSAGE..." autocomplete="off">
+            <button id="send-chat" class="chat-send-btn">SEND</button>
+        </div>
+    </div>
+
+    <!-- Floating Chat Toggle Button -->
+    <button id="chat-toggle" class="chat-toggle-btn">
+        <div class="toggle-icon">💬</div>
+        <div class="toggle-text">UPLINK</div>
+    </button>
+
+    <script src="auth.js"></script>
+    <script src="chat.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await window._supabase.auth.getSession();
+            if (!session) {
+                document.getElementById('access-denied').style.display = 'block';
+                setTimeout(() => window.location.href = 'index.html', 3000);
+            } else {
+                document.getElementById('admin-main').style.display = 'block';
+                const rates = JSON.parse(localStorage.getItem('07gold_rates')) || { buy: 0.35, sell: 0.31 };
+                document.getElementById('new-buy-rate').value = rates.buy;
+                document.getElementById('new-sell-rate').value = rates.sell;
+            }
+        });
+
+        document.getElementById('push-update').addEventListener('click', () => {
+            const buy = parseFloat(document.getElementById('new-buy-rate').value);
+            const sell = parseFloat(document.getElementById('new-sell-rate').value);
+            if (buy && sell) {
+                localStorage.setItem('07gold_rates', JSON.stringify({ buy, sell }));
+                const status = document.getElementById('status-msg');
+                status.textContent = ">>> DATABASE_UPDATED";
+                setTimeout(() => status.textContent = "", 3000);
+            }
+        });
+
+        async function handleLogout() {
+            await window._supabase.auth.signOut();
+            window.location.href = 'index.html';
+        }
+
+        // Admin Communication Monitor
+        function initAdminMonitor() {
+            const uplinkList = document.getElementById('uplink-list');
+            const activeUsers = new Set();
+
+            const monitorChannel = window._supabase.channel('admin-monitor');
+            
+            monitorChannel
+                .on('broadcast', { event: 'presence' }, (payload) => {
+                    addUserToMonitor(payload.payload.visitorId);
+                })
+                .on('broadcast', { event: 'notification' }, (payload) => {
+                    addUserToMonitor(payload.payload.visitorId, payload.payload.text);
+                })
+                .subscribe();
+
+            function addUserToMonitor(id, lastMsg = "ONLINE") {
+                if (!activeUsers.has(id)) {
+                    activeUsers.add(id);
+                    if (activeUsers.size === 1) uplinkList.innerHTML = '';
+                    
+                    const userDiv = document.createElement('div');
+                    userDiv.id = `uplink-${id}`;
+                    userDiv.style = "background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); padding: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s;";
+                    userDiv.onmouseover = () => userDiv.style.borderColor = "var(--cyber-magenta)";
+                    userDiv.onmouseout = () => userDiv.style.borderColor = "var(--glass-border)";
+                    userDiv.onclick = () => window.joinUserChat(id);
+                    
+                    userDiv.innerHTML = `
+                        <div>
+                            <span style="color: var(--cyber-cyan); font-family: 'Orbitron'; font-size: 0.7rem;">ID: ${id}</span>
+                            <p id="msg-${id}" style="font-size: 0.9rem; margin-top: 5px; color: #888;">${lastMsg}</p>
+                        </div>
+                        <span style="color: var(--cyber-magenta); font-size: 0.6rem;">[CONNECT]</span>
+                    `;
+                    uplinkList.appendChild(userDiv);
+                } else if (lastMsg !== "ONLINE") {
+                    const msgEl = document.getElementById(`msg-${id}`);
+                    if (msgEl) {
+                        msgEl.textContent = lastMsg;
+                        msgEl.style.color = "var(--cyber-yellow)";
+                    }
+                }
+            }
+        }
+
+        // Initialize monitor after session check
+        const originalDOMContentLoaded = document.addEventListener;
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(initAdminMonitor, 1000);
+        });
+    </script>
+</body>
+</html>

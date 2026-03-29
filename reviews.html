@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07gold // VOUCH_ARCHIVE</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 85 L10 45 L25 55 L40 25 L55 55 L75 25 L85 55 L95 45 L90 85 Z' fill='%23fbee06' /%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .reviews-container {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 3rem;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+
+        .reviews-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0px var(--cyber-magenta), -3px -3px 0px var(--cyber-cyan);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .review-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            transition: var(--transition);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .review-card:hover {
+            border-color: var(--cyber-cyan);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .review-user {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            border: 2px solid var(--cyber-cyan);
+            padding: 2px;
+            box-shadow: var(--glow);
+        }
+
+        .user-info h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--cyber-cyan);
+        }
+
+        .verified-badge {
+            color: var(--cyber-magenta);
+            margin-left: 5px;
+        }
+
+        .review-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #eee;
+            border-left: 3px solid var(--cyber-magenta);
+            padding-left: 1.5rem;
+            font-style: italic;
+        }
+
+        .source-link {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--cyber-yellow);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .source-link:hover {
+            text-shadow: 0 0 10px var(--cyber-yellow);
+        }
+
+        @media (max-width: 768px) {
+            .reviews-header h1 { font-size: 2.5rem; }
+            .reviews-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hud-corner top-left"></div>
+    <div class="hud-corner top-right"></div>
+    <div class="hud-corner bottom-left"></div>
+    <div class="hud-corner bottom-right"></div>
+
+    <div class="video-background">
+        <video autoplay muted loop id="bg-video" playsinline>
+            <source src="os-download-background.webm" type="video/webm">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="brand-link" style="text-decoration: none; color: inherit;">
+            <div class="brand-container">
+                <div class="logo-text">07<span>GOLD</span></div>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="index.html#buy">BUY_GP</a></li>
+            <li><a href="index.html#sell">SELL_GP</a></li>
+            <li><a href="reviews.html" class="active">VOUCHES</a></li>
+            <li><a href="index.html#support">UPLINK</a></li>
+        </ul>
+    </nav>
+
+    <main class="reviews-container">
+        <header class="reviews-header">
+            <h1>NETWORK_<span class="highlight">VOUCHES</span></h1>
+            <p style="color: var(--cyber-cyan); letter-spacing: 3px; font-weight: 700;">// DECRYPTED_USER_FEEDBACK_LOGS</p>
+        </header>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-user">
+                    <img src="kizaro.gif" alt="kizaro" class="user-avatar">
+                    <div class="user-info">
+                        <h3>kizaro <span class="verified-badge">✓</span></h3>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">TRUSTED_OPERATOR</span>
+                    </div>
+                </div>
+                <div class="review-content">"vouch, sold us gp thanks alot"</div>
+                <div class="review-footer" style="margin-top: auto;">
+                    <a href="https://www.sythe.org/threads/buy-sell-osrs-gp-marcus-emprestimo-disc-vouches/" target="_blank" class="source-link">> VIEW_SOURCE_SYTHE</a>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-user">
+                    <img src="fairy.gif" alt="fairy" class="user-avatar">
+                    <div class="user-info">
+                        <h3>fairy <span class="verified-badge">✓</span></h3>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">ACTIVE_NODE</span>
+                    </div>
+                </div>
+                <div class="review-content">"bought gp from me thank you"</div>
+                <div class="review-footer" style="margin-top: auto;">
+                    <a href="https://www.sythe.org/threads/buy-sell-osrs-gp-marcus-emprestimo-disc-vouches/" target="_blank" class="source-link">> VIEW_SOURCE_SYTHE</a>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-user">
+                    <img src="garret.png" alt="garret" class="user-avatar">
+                    <div class="user-info">
+                        <h3>garret <span class="verified-badge">✓</span></h3>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">ELITE_MEMBER</span>
+                    </div>
+                </div>
+                <div class="review-content">"Honestly, Marcus is an amazing Runescaper if I do say so myself. He has not only sold gold to me but also purchased gold from me..."</div>
+                <div class="review-footer" style="margin-top: auto;">
+                    <a href="https://www.sythe.org/threads/buy-sell-osrs-gp-marcus-emprestimo-disc-vouches/" target="_blank" class="source-link">> VIEW_SOURCE_SYTHE</a>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-user">
+                    <img src="jimsky.webp" alt="jimsky" class="user-avatar">
+                    <div class="user-info">
+                        <h3>jimsky <span class="verified-badge">✓</span></h3>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">PROTOCOL_TRADER</span>
+                    </div>
+                </div>
+                <div class="review-content">"Sold us some OSRS Gold, quick and easy ! thanks bro"</div>
+                <div class="review-footer" style="margin-top: auto;">
+                    <a href="https://www.sythe.org/threads/buy-sell-osrs-gp-marcus-emprestimo-disc-vouches/" target="_blank" class="source-link">> VIEW_SOURCE_SYTHE</a>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-user">
+                    <img src="Yanliliz.gif" alt="Yanliliz" class="user-avatar">
+                    <div class="user-info">
+                        <h3>Yanliliz <span class="verified-badge">✓</span></h3>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">VERIFIED_OPERATOR</span>
+                    </div>
+                </div>
+                <div class="review-content">"Sold me 904m osrs gold ty guy"</div>
+                <div class="review-footer" style="margin-top: auto;">
+                    <a href="https://www.sythe.org/threads/buy-sell-osrs-gp-marcus-emprestimo-disc-vouches/" target="_blank" class="source-link">> VIEW_SOURCE_SYTHE</a>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-user">
+                    <img src="RS07SHOP.gif" alt="RS07Shop" class="user-avatar">
+                    <div class="user-info">
+                        <h3>RS07Shop <span class="verified-badge">✓</span></h3>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">OFFICIAL_PARTNER</span>
+                    </div>
+                </div>
+                <div class="review-content">"Bought 600m from us A++ Tyvm :)"</div>
+                <div class="review-footer" style="margin-top: auto;">
+                    <a href="https://www.sythe.org/threads/buy-sell-osrs-gp-marcus-emprestimo-disc-vouches/" target="_blank" class="source-link">> VIEW_SOURCE_SYTHE</a>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-user">
+                    <img src="RAYMON.gif" alt="RAYMON" class="user-avatar">
+                    <div class="user-info">
+                        <h3>RAYMON <span class="verified-badge">✓</span></h3>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">NETWORK_USER</span>
+                    </div>
+                </div>
+                <div class="review-content">"Sold me 100m all good"</div>
+                <div class="review-footer" style="margin-top: auto;">
+                    <a href="https://www.sythe.org/threads/buy-sell-osrs-gp-marcus-emprestimo-disc-vouches/" target="_blank" class="source-link">> VIEW_SOURCE_SYTHE</a>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-user">
+                    <img src="ATW.gif" alt="ATW" class="user-avatar">
+                    <div class="user-info">
+                        <h3>ATW <span class="verified-badge">✓</span></h3>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">ELITE_NODE</span>
+                    </div>
+                </div>
+                <div class="review-content">"sold me 1.4b, smooth trade tyty"</div>
+                <div class="review-footer" style="margin-top: auto;">
+                    <a href="https://www.sythe.org/threads/buy-sell-osrs-gp-marcus-emprestimo-disc-vouches/" target="_blank" class="source-link">> VIEW_SOURCE_SYTHE</a>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-user">
+                    <img src="RPGSTASH.gif" alt="RPGSTASH" class="user-avatar">
+                    <div class="user-info">
+                        <h3>RPGStash <span class="verified-badge">✓</span></h3>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">VERIFIED_MERCHANT</span>
+                    </div>
+                </div>
+                <div class="review-content">"Sold me 1b 07, thanks a lot"</div>
+                <div class="review-footer" style="margin-top: auto;">
+                    <a href="https://www.sythe.org/threads/buy-sell-osrs-gp-marcus-emprestimo-disc-vouches/" target="_blank" class="source-link">> VIEW_SOURCE_SYTHE</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Live Chat Widget -->
+    <div id="chat-widget-container" class="chat-widget">
+        <div id="chat-header" class="chat-header">
+            <div class="chat-status">
+                <span class="status-dot"></span>
+                <span>NEURAL_UPLINK_v1.0</span>
+            </div>
+            <button id="close-chat" class="chat-close-btn">[X]</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message system">
+                <span class="msg-time">12:00</span>
+                <span class="msg-sender">SYSTEM:</span> UPLINK_ESTABLISHED. SECURE_CHANNEL_OPEN.
+            </div>
+            <div class="message agent">
+                <span class="msg-time">12:01</span>
+                <span class="msg-sender">AGENT_KAY:</span> WELCOME TO 07GOLD. HOW CAN I ASSIST YOUR TRADE TODAY?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="TYPE_MESSAGE..." autocomplete="off">
+            <button id="send-chat" class="chat-send-btn">SEND</button>
+        </div>
+    </div>
+
+    <!-- Floating Chat Toggle Button -->
+    <button id="chat-toggle" class="chat-toggle-btn">
+        <div class="toggle-icon">💬</div>
+        <div class="toggle-text">UPLINK</div>
+    </button>
+
+    <footer class="footer" style="padding: 4rem; text-align: center; border-top: 1px solid var(--glass-border);">
+        <div class="logo-text" style="font-size: 1.2rem;">07<span>GOLD</span></div>
+        <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 1rem;">© 2026 // NEURAL_EXCHANGE_PROTOCOL. ALL_RIGHTS_RESERVED.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>
