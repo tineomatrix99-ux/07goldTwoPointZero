@@ -11,3 +11,16 @@ CREATE TABLE IF NOT EXISTS users (
 -- Insert Admin Account
 INSERT INTO users (username, password, role) 
 VALUES ('07gold', '123', 'admin');
+
+-- Market Rates Table (For cloud persistence)
+CREATE TABLE IF NOT EXISTS market_rates (
+    id INT PRIMARY KEY DEFAULT 1,
+    buy_rate FLOAT NOT NULL,
+    sell_rate FLOAT NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Initialize with default rates
+INSERT INTO market_rates (id, buy_rate, sell_rate) 
+VALUES (1, 0.35, 0.31)
+ON CONFLICT (id) DO NOTHING;

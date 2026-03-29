@@ -187,14 +187,34 @@
             }
         });
 
-        document.getElementById('push-update').addEventListener('click', () => {
+        document.getElementById('push-update').addEventListener('click', async () => {
             const buy = parseFloat(document.getElementById('new-buy-rate').value);
             const sell = parseFloat(document.getElementById('new-sell-rate').value);
+            
             if (buy && sell) {
-                localStorage.setItem('07gold_rates', JSON.stringify({ buy, sell }));
                 const status = document.getElementById('status-msg');
-                status.textContent = ">>> DATABASE_UPDATED";
-                setTimeout(() => status.textContent = "", 3000);
+                status.textContent = ">>> INITIATING_CLOUD_SYNC...";
+                status.style.color = "var(--cyber-yellow)";
+
+                // 1. Local Backup
+                localStorage.setItem('07gold_rates', JSON.stringify({ buy, sell }));
+
+                // 2. Supabase Global Sync
+                if (window._supabase) {
+                    const { error } = await window._supabase
+                        .from('market_rates')
+                        .upsert({ id: 1, buy_rate: buy, sell_rate: sell });
+
+                    if (error) {
+                        status.textContent = ">>> SYNC_ERROR: " + error.message.toUpperCase();
+                        status.style.color = "var(--cyber-magenta)";
+                        console.error(error);
+                    } else {
+                        status.textContent = ">>> GLOBAL_MARKET_INDEX_UPDATED";
+                        status.style.color = "var(--cyber-cyan)";
+                        setTimeout(() => status.textContent = "", 3000);
+                    }
+                }
             }
         });
 

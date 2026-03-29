@@ -7,9 +7,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentMode = 'buy';
     
-    // Load rates from localStorage or use defaults
-    const savedRates = JSON.parse(localStorage.getItem('07gold_rates'));
-    let rates = savedRates || { buy: 0.35, sell: 0.31 };
+    // Default Rates
+    let rates = { buy: 0.35, sell: 0.31 };
+
+    async function loadGlobalRates() {
+        // 1. Try fetching from Supabase (Persistent Global Rates)
+        if (window._supabase) {
+            try {
+                const { data, error } = await window._supabase
+                    .from('market_rates')
+                    .select('buy_rate, sell_rate')
+                    .eq('id', 1)
+                    .single();
+                
+                if (data && !error) {
+                    rates = { buy: data.buy_rate, sell: data.sell_rate };
+                    localStorage.setItem('07gold_rates', JSON.stringify(rates));
+                    updatePrice();
+                    console.log("MARKET_INDEX_SYNCED_WITH_CLOUD");
+                    return;
+                }
+            } catch (e) {
+                console.warn("CLOUD_SYNC_FAILED, FALLING_BACK_TO_LOCAL");
+            }
+        }
+
+        // 2. Fallback to localStorage or defaults
+        const savedRates = JSON.parse(localStorage.getItem('07gold_rates'));
+        if (savedRates) {
+            rates = savedRates;
+            updatePrice();
+        }
+    }
 
     function updatePrice() {
         if (!goldInput) return;
@@ -147,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.hash === '#buy') handleNavTrade('buy');
     if (window.location.hash === '#sell') handleNavTrade('sell');
 
-    // Initial price update
+    // Initial price and global sync
+    loadGlobalRates();
     updatePrice();
 });
