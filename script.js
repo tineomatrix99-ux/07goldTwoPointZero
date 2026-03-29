@@ -116,30 +116,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     sysDiv.innerHTML = `<span class="msg-sender">SYSTEM:</span> ENCRYPTING_TRADE_DATA...`;
                     chatMessages.appendChild(sysDiv);
 
-                    // 2. Add the user's request message
-                    const userDiv = document.createElement('div');
-                    userDiv.className = 'message user';
-                    const now = new Date();
-                    const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-                    
+                    // 2. Format the message text
                     const msgText = `I WOULD LIKE TO ${type} ${amount}M GOLD FOR $${price} VIA ${method}.`;
-                    userDiv.innerHTML = `
-                        <span class="msg-time">${timestamp}</span>
-                        <span class="msg-sender">USER:</span> ${msgText}
-                    `;
-                    chatMessages.appendChild(userDiv);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
 
                     // 3. Trigger the broadcast using the shared function in chat.js
+                    // This function will both SEND the broadcast and RENDER the message locally.
                     if (window.triggerExternalMessage) {
                         window.triggerExternalMessage(msgText);
                     }
-                    }
-                    } else {
-                    alert(`UPLINK_OFFLINE: Please manually request ${type} ${amount}M via ${method}.`);
-                    }
-                    });
-                    }
+                }
+            } else {
+                alert(`UPLINK_OFFLINE: Please manually request ${type} ${amount}M via ${method}.`);
+            }
+        });
+    }
     // Navbar Navigation Logic for BUY/SELL
     const navBuyLinks = document.querySelectorAll('a[href="#buy"], a[href="index.html#buy"]');
     const navSellLinks = document.querySelectorAll('a[href="#sell"], a[href="index.html#sell"]');
